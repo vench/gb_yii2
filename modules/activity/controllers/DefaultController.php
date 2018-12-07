@@ -4,6 +4,7 @@ namespace app\modules\activity\controllers;
 
 use app\modules\activity\models\Activity;
 use yii\web\Controller;
+use Yii;
 
 /**
  * Default controller for the `activity` module
@@ -24,4 +25,30 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionActivity()
+    {
+        $model = new \app\modules\activity\models\Activity();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('activity', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     *
+     */
+    public function actionSuccess() {
+        echo 'success';
+        exit();
+    }
+
 }
