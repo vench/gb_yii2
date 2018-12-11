@@ -14,37 +14,48 @@ class Activity extends Model
 {
 
     /**
-     * @var string
+     * @var integer
      */
-    public $name;
+    public $id_activity;
 
     /**
      * @var string
      */
-    public $description;
+    public $activity_name;
+
+    /**
+     * @var string
+     */
+    public $body;
 
     /**
      * @var \DateTime
      */
-    public $dateTimeStart;
+    public $activity_start_timestamp;
 
     /**
      * @var \DateTime
      */
-    public $dateTimeEnd;
+    public $activity_end_timestamp;
 
     /**
      * @var boolean
      */
-    public $isBlock = false;
+    public $is_block = false;
+
+    /**
+     * @var integer
+     */
+    public $id_user;
 
 
     public function rules()
     {
         return [
-            [['name','description'], 'required'],
-            [['dateTimeStart','dateTimeEnd'], 'date'],
-            ['isBlock', 'boolean']
+            [['activity_name','body'], 'required'],
+            [['activity_end_timestamp','activity_start_timestamp'],
+                'date', 'format' => 'php:Y-m-d H:i:s'],
+            ['is_block', 'boolean']
         ];
     }
 
@@ -54,7 +65,10 @@ class Activity extends Model
     public function attributeLabels()
     {
         return [
-            'name'  => 'Name Activity',
+            'name'          => 'Name Activity',
+            'id_activity'   => 'Id Activity',
+            'activity_start_timestamp'  => 'Date start',
+            'activity_end_timestamp'  => 'Date end',
         ];
     }
 }

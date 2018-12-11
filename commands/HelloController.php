@@ -36,6 +36,39 @@ class HelloController extends Controller
         return ExitCode::OK;
     }
 
+
+    public function actionDb() {
+
+        $db = \Yii::$app->db;
+        echo __METHOD__, PHP_EOL;
+        echo $db->getDriverName(), ' ', $db->getServerVersion(), PHP_EOL;
+
+        /*$result = $db->createCommand()->insert('activity', [
+            'activity_name' => "Some name",
+            'activity_start_timestamp' => date('Y-m-d H:i:s'),
+            'activity_end_timestamp' =>  date('Y-m-d H:i:s'),
+            'id_user' => 101,
+            'body' => "Some text"
+        ])->execute();
+
+        echo "\$result: {$result}", PHP_EOL;*/
+
+        //$result = $db->createCommand('SELECT count(*) as x FROM activity')->queryScalar();
+       // print_r($result);
+
+        $result = $db->createCommand()->update('activity', [
+            'activity_name' => 'Activity name',
+        ], 'id_activity=:id', [
+            ':id'   => 2,
+        ])->getRawSql();
+
+        echo "\$result: {$result}", PHP_EOL;
+
+        return ExitCode::OK;
+
+    }
+
+
     /**
      * @return int
      */

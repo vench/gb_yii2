@@ -1,5 +1,10 @@
 <?php
 
+if(YII_ENV_DEV) {
+
+    return require 'db.dev.php';
+}
+
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=yii2basic',

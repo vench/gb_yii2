@@ -7,20 +7,28 @@ use yii\widgets\ActiveForm;
 /* @var $model app\modules\activity\models\Activity */
 /* @var $form ActiveForm */
 
-
+$this->title = 'Form activity';
+$this->params['breadcrumbs'][] = [
+        'url' => '/activity/default/index',
+        'label'=> 'Index activity'
+];
+$this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
+
+
 <div class="default-activity">
 
     <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'name') ?>
-        <?= $form->field($model, 'description')->textarea(); ?>
+        <?= $form->field($model, 'activity_name') ?>
+        <?= $form->field($model, 'body')->textarea(); ?>
 
-        <?= $form->field($model, 'dateTimeStart') ?>
-        <?= $form->field($model, 'dateTimeEnd'); ?>
+        <?= $form->field($model, 'activity_start_timestamp') ?>
+        <?= $form->field($model, 'activity_end_timestamp'); ?>
 
-        <?= $form->field($model, 'isBlock')->checkbox(); ?>
+        <?= $form->field($model, 'is_block')->checkbox(); ?>
 
     
         <div class="form-group">

@@ -1,32 +1,22 @@
 <?php
-/* @var $model app\modules\activity\models\Activity */
+/* @var $list app\modules\activity\models\Activity[] */
 
+
+
+$this->title = 'Index activity';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
 <div class="activity-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
+    <h1>List of Activity</h1>
+    <a class="btn btn-primary" href="/activity/default/activity">Create</a>
+    <hr/>
 
 
-
-    <?php echo \app\modules\activity\widgets\ViewAvtivity::widget([
+    <?php foreach ($list as $model): ?>
+        <?php echo \app\modules\activity\widgets\ViewAvtivity::widget([
             'model' => $model,
-    ]); ?>
-
-
-    <?php yii\bootstrap\Modal::begin([
-        'header' => '<h2>Hello world</h2>',
-        'toggleButton' => ['label' => 'click me'],
-    ]);?>
-    <p>Content Modal</p>
-    <?php  yii\bootstrap\Modal::end() ?>
-
-    <?php echo \app\modules\activity\widgets\ViewAvtivity::widget([
-        'model' => $model,
-    ]); ?>
+        ]); ?>
+    <?php endforeach; ?>
 </div>

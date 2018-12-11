@@ -22,13 +22,8 @@ class ViewAvtivity extends \yii\base\Widget
 
     public function run()
     {
-
-        $oldRef = \Yii::$app->session->get('ref');
-        \Yii::$app->session->set('ref', \Yii::$app->request->referrer);
-
         return $this->render('view_avtivity', [
             'model' => $this->model,
-            'ref'   => $oldRef,
         ]);
     }
 }

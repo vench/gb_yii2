@@ -5,6 +5,7 @@ namespace app\modules\activity\controllers;
 use app\modules\activity\models\Activity;
 use yii\web\Controller;
 use Yii;
+use app\modules\activity\models\ActivityDAO;
 
 /**
  * Default controller for the `activity` module
@@ -17,15 +18,17 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-
-        $model = new Activity();
-        $model->name = 'test';
+        $search = new Activity();
+        $activityDAO = new ActivityDAO();
 
         return $this->render('index', [
-            'model' => $model,
+            'list' => $activityDAO->search($search),
         ]);
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionActivity()
     {
         $model = new \app\modules\activity\models\Activity();
@@ -33,6 +36,9 @@ class DefaultController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 // form inputs are valid, do something here
+
+                $activityDAO = new ActivityDAO();
+                $activityDAO->create($model);
 
                 return $this->redirect(['index']);
             }
@@ -45,10 +51,10 @@ class DefaultController extends Controller
 
     /**
      *
-     */
+
     public function actionSuccess() {
         echo 'success';
         exit();
-    }
+    } */
 
 }
