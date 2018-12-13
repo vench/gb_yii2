@@ -3,6 +3,7 @@
 namespace app\modules\activity\controllers;
 
 use app\modules\activity\models\Activity;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use Yii;
 use app\modules\activity\models\ActivityDAO;
@@ -12,17 +13,46 @@ use app\modules\activity\models\ActivityDAO;
  */
 class DefaultController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access'    => [
+                'class' => AccessControl::class,
+                //'only'  => ['activity'],
+                'rules' => [
+                    [
+                        'actions'   => ['index'],
+                        'allow'    => true,
+                        'roles'    => ['@'],
+                    ],
+                    [
+                        'actions'   => ['activity'],
+                        'allow'     => true,
+                        'roles'     => ['admin'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
      */
     public function actionIndex()
     {
-        $search = new Activity();
-        $activityDAO = new ActivityDAO();
+
+        $isAdmin = Yii::$app->user->can('admin');
+        $find = Activity::find();
+
+        if(!$isAdmin) {
+            $find = $find->where([
+                'id_user'   =>  Yii::$app->user->id,
+            ]);
+        }
 
         return $this->render('index', [
-            'list' => $activityDAO->search($search),
+            'list' => $find->all(),
         ]);
     }
 
@@ -34,12 +64,9 @@ class DefaultController extends Controller
         $model = new \app\modules\activity\models\Activity();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->id_user = Yii::$app->user->id;
             if ($model->validate()) {
-                // form inputs are valid, do something here
-
-                $activityDAO = new ActivityDAO();
-                $activityDAO->create($model);
-
+                $model->save();
                 return $this->redirect(['index']);
             }
         }
@@ -49,12 +76,5 @@ class DefaultController extends Controller
         ]);
     }
 
-    /**
-     *
-
-    public function actionSuccess() {
-        echo 'success';
-        exit();
-    } */
 
 }

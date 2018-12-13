@@ -25,10 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'activity_name') ?>
         <?= $form->field($model, 'body')->textarea(); ?>
 
-        <?= $form->field($model, 'activity_start_timestamp') ?>
-        <?= $form->field($model, 'activity_end_timestamp'); ?>
+        <?= $form->field($model, 'activity_start_timestamp')->widget(
+                'kartik\date\DatePicker',
+                    [
+                        'name'  => 'activity_start_timestamp',
+                    ]
+        ) ?>
+        <?= $form->field($model, 'activity_end_timestamp')->widget(
+            'kartik\date\DatePicker',
+            [
+                'name'  => 'activity_end_timestamp',
+            ]
+        )  ?>
 
-        <?= $form->field($model, 'is_block')->checkbox(); ?>
 
     
         <div class="form-group">

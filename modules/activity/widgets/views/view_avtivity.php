@@ -15,6 +15,13 @@
         <?= $model->activity_end_timestamp ?>
     </code>
 
+    <?php if(!is_null($model->user)):?>
+    <br/>
+    <code>
+        Creator: <?=$model->user->username?>
+    </code>
+    <?php endif; ?>
+
     <br/>
 
     <?php echo \yii\helpers\Html::a('Delete', [

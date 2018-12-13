@@ -3,59 +3,31 @@
 namespace app\modules\activity\models;
 
 
+use app\models\User;
 use yii\base\Model;
+use yii\db\ActiveRecord;
 
 
 /**
  * Class Activity
  * @package app\modules\activity\models
  */
-class Activity extends Model
+class Activity extends ActiveRecord
 {
 
-    /**
-     * @var integer
-     */
-    public $id_activity;
+
 
     /**
-     * @var string
+     * @return array
      */
-    public $activity_name;
-
-    /**
-     * @var string
-     */
-    public $body;
-
-    /**
-     * @var \DateTime
-     */
-    public $activity_start_timestamp;
-
-    /**
-     * @var \DateTime
-     */
-    public $activity_end_timestamp;
-
-    /**
-     * @var boolean
-     */
-    public $is_block = false;
-
-    /**
-     * @var integer
-     */
-    public $id_user;
-
-
     public function rules()
     {
         return [
             [['activity_name','body'], 'required'],
             [['activity_end_timestamp','activity_start_timestamp'],
                 'date', 'format' => 'php:Y-m-d H:i:s'],
-            ['is_block', 'boolean']
+            ['id_user', 'integer'],
+          //  ['is_block', 'boolean']
         ];
     }
 
@@ -70,5 +42,12 @@ class Activity extends Model
             'activity_start_timestamp'  => 'Date start',
             'activity_end_timestamp'  => 'Date end',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser() {
+        return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 }
