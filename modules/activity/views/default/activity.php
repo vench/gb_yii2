@@ -29,12 +29,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 'kartik\date\DatePicker',
                     [
                         'name'  => 'activity_start_timestamp',
+                        'options' => [
+                            'placeholder' =>'Выберите дату завершения события'
+                        ],
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'format' => 'yyyy-MM-dd',
+                            'todayHighlight' => true,
+                         ]
                     ]
         ) ?>
         <?= $form->field($model, 'activity_end_timestamp')->widget(
             'kartik\date\DatePicker',
             [
                 'name'  => 'activity_end_timestamp',
+                'options' => [
+                        'placeholder' =>'Выберите дату завершения события'
+                 ],
+                'convertFormat' => true,
+                'pluginOptions' => [
+                'format' => 'yyyy-MM-dd',
+                'todayHighlight' => true,
+                ]
             ]
         )  ?>
 
