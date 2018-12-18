@@ -1,4 +1,7 @@
 <?php
+
+use Yii;
+
 /* @var $model \app\modules\activity\models\Activity */
 ?>
 
@@ -10,9 +13,10 @@
         <?= $model->id_activity ?></code>
     <br>
     <code> <?=$model->getAttributeLabel('activity_start_timestamp')?>:
-        <?= $model->activity_start_timestamp ?>
+        <?= Yii::$app->formatter->asDate( $model->activity_start_timestamp, Yii::$app->params['format_date_view']) ?>
         <?=$model->getAttributeLabel('activity_end_timestamp')?>:
-        <?= $model->activity_end_timestamp ?>
+        <?= Yii::$app->formatter->asDate( $model->activity_end_timestamp, Yii::$app->params['format_date_view']) ?>
+
     </code>
 
     <?php if(!is_null($model->user)):?>
@@ -22,17 +26,6 @@
     </code>
     <?php endif; ?>
 
-    <br/>
 
-    <?php echo \yii\helpers\Html::a('Delete', [
-        'delete', 'id'    => $model->id_activity,
-    ], [
-        'class' => 'btn btn-danger',
-    ]) ?> |
-    <?php echo \yii\helpers\Html::a('Edit', [
-            'edit', 'id'    => $model->id_activity,
-    ], [
-            'class' => 'btn btn-info',
-    ]) ?>
 
 </div>

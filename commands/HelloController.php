@@ -7,6 +7,8 @@
 
 namespace app\commands;
 
+use app\modules\activity\models\Activity;
+use app\modules\activity\models\SetDefaultDateBehavior;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
@@ -32,6 +34,33 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+
+        return ExitCode::OK;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function actionTestEvent() {
+
+
+        $model = new Activity();
+
+        $model->on(Activity::EVENT_MY_CASE, function (){
+            var_dump("\$model->on(Activity::EVENT_MY_CASE");
+        });
+        $model->runMyCase();
+
+        $ba = new SetDefaultDateBehavior();
+        $ba->fieldValidate = 'activity_end_timestamp';
+        $ba->fieldDefault = 'activity_start_timestamp';
+        $model->attachBehavior('test', $ba);
+
+        $model->activity_start_timestamp = date('Y-m-d');
+
+        var_dump($model->validate());
+        var_dump($model->activity_end_timestamp);
 
         return ExitCode::OK;
     }
