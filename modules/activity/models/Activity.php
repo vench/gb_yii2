@@ -31,6 +31,7 @@ class Activity extends ActiveRecord
         var_dump($s);
 
 
+
         $this->trigger(self::EVENT_MY_CASE);
     }
 
@@ -44,7 +45,17 @@ class Activity extends ActiveRecord
                 'fieldValidate' => 'activity_end_timestamp',
                 'fieldDefault'  => 'activity_start_timestamp',
             ],  */
+           'cache'=> [
+               'class'  => ActiveRecordCacheBehavior::class,
+
+           ]
         ];
+    }
+
+    public static function findById($id)
+    {
+        $model = new static();
+        return $model->_findByOne($id);
     }
 
 

@@ -101,6 +101,46 @@ class HelloController extends Controller
     /**
      * @return int
      */
+    public function actionCache() {
+
+        $cache = \Yii::$app->cache;
+
+        $key = 'num_array';
+        $value = $cache->get($key);
+        if($value === false) {
+            $value = range(0,20, 1);
+            $cache->set($key, $value);
+
+            echo "Set to cache", PHP_EOL;
+
+        } else {
+            echo "Get from cache", PHP_EOL;
+        }
+
+        echo join($value, ', '), PHP_EOL;
+
+        /* @var $model Activity */
+        $model = Activity::findById(2);
+
+        if(!is_null($model)) {
+            echo "LOAD model: {$model->id_activity}", PHP_EOL;
+
+            $model->activity_name = 'activity_name ' . time();
+            $model->update(false);
+
+        }
+
+
+
+        return ExitCode::OK;
+
+
+    }
+
+
+    /**
+     * @return int
+     */
     public function actionTest() {
 /*
         $data = [

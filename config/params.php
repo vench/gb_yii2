@@ -8,4 +8,6 @@ return [
     'format_date_model'   => 'php:Y-m-d',
     'format_date_view'    => 'php:Y-m-d',
 
+    'default_email'       => 'test@mail.test',
+
 ];

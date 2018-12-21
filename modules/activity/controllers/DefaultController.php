@@ -3,6 +3,7 @@
 namespace app\modules\activity\controllers;
 
 use app\modules\activity\models\Activity;
+use yii\caching\DbDependency;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -48,16 +49,24 @@ class DefaultController extends Controller
     {
 
         $isAdmin = Yii::$app->user->can('admin');
-        $find = Activity::find();
 
+        $params = [];
         if(!$isAdmin) {
-            $find = $find->where([
-                'id_user'   =>  Yii::$app->user->id,
-            ]);
+            $params['id_user']   =  Yii::$app->user->id;
+        }
+
+        $list = [];
+        if(!Yii::$app->cache->exists($params)) {
+            $list = Activity::find()->where($params)->all();
+            Yii::$app->cache->set($params, $list, null, new DbDependency([
+                'sql'   => 'SELECT MAX(`created_at`) FROM activity',
+            ]));
+        } else {
+            $list = Yii::$app->cache->get($params);
         }
 
         return $this->render('index', [
-            'list' => $find->all(),
+            'list' => $list,
         ]);
     }
 
