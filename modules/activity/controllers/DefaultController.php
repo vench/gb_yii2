@@ -59,7 +59,7 @@ class DefaultController extends Controller
         if(!Yii::$app->cache->exists($params)) {
             $list = Activity::find()->where($params)->all();
             Yii::$app->cache->set($params, $list, null, new DbDependency([
-                'sql'   => 'SELECT MAX(`created_at`) FROM activity',
+                'sql'   => 'SELECT COUNT(*) FROM activity',
             ]));
         } else {
             $list = Yii::$app->cache->get($params);

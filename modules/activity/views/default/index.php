@@ -12,11 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1>List of Activity</h1>
     <a class="btn btn-primary" href="/activity/default/activity">Create</a>
     <hr/>
-
-
-    <?php foreach ($list as $model): ?>
-        <?php echo \app\modules\activity\widgets\ViewAvtivity::widget([
-            'model' => $model,
-        ]); ?>
-    <?php endforeach; ?>
+    <?php echo \app\modules\activity\widgets\Calendar::widget([
+            'activities' => $list,
+            'date'       => new \DateTime('2018-12-01'), // TODO тут меняем время
+    ]); ?>
 </div>
