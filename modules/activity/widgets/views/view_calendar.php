@@ -1,13 +1,33 @@
 <?php
 /* @var $activities  \app\modules\activity\models\Activity[] */
-/* @var $data \DateTime */
+/* @var $date \DateTime */
+
+
+?>
+<h3><?php echo $date->format('Y-m-d'); ?></h3>
+<?php
 
 $first = $date->modify('first day of this month');
-$firstDay = ($first->format('w') + 7) % 7;
+$firstDay = $first->format('w');
+if($firstDay == 0) {
+    $firstDay = 7;
+}
 $totalDay = $first->format('t');
 $cellCount = ($firstDay + $totalDay + (7 - (($firstDay + $totalDay) % 7))) ;
 
+
+
+$lastDate= $first->modify('last day of last month');
+//$nextDate= $first->modify('last day of next month');
 ?>
+
+<div>
+
+    <?php echo \yii\helpers\Html::a('back', [
+        'index', 'date' =>  $lastDate->format('Y-m-d')
+    ]) ?>
+</div>
+
 <table class="table table-bordered">
 
     <tr>

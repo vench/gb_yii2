@@ -48,6 +48,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
 
+
+        $date = Yii::$app->request->get('date');
+
+
         $isAdmin = Yii::$app->user->can('admin');
 
         $params = [];
@@ -66,7 +70,8 @@ class DefaultController extends Controller
         }
 
         return $this->render('index', [
-            'list' => $list,
+            'list'  => $list,
+            'date'  => new \DateTime($date),
         ]);
     }
 

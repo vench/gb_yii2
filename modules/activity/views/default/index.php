@@ -1,5 +1,6 @@
 <?php
 /* @var $list app\modules\activity\models\Activity[] */
+/* @var $date \DateTime */
 
 
 
@@ -14,6 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr/>
     <?php echo \app\modules\activity\widgets\Calendar::widget([
             'activities' => $list,
-            'date'       => new \DateTime('2018-12-01'), // TODO тут меняем время
+            'date'       => $date,
     ]); ?>
 </div>
